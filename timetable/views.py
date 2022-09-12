@@ -3,6 +3,7 @@ from csv import DictReader
 from itertools import groupby
 from collections import OrderedDict
 from datetime import date, datetime
+import copy
 
 from io import TextIOWrapper
 
@@ -193,7 +194,7 @@ def show_rooms(request, date, period):
 
     reservations = Reservation.objects.filter(date=date, period_number=period)
     for res in reservations:
-        rooms[res.room] = lessons[0]
+        rooms[res.room] = copy.copy(lessons[0])
         rooms[res.room].substitute = res.teacher
         rooms[res.room].message = _("RESERVED")
     
