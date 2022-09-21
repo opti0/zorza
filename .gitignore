@@ -10,6 +10,7 @@ localsettings.py
 # KDE Dolphin cache files
 .directory
 
+/env
 /venv
 staticfiles
 mediafiles
