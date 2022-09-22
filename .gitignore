@@ -1,6 +1,7 @@
 # Python cache and bytecode
 *.py[cod]
 __pycache__
+./__pycache__
 
 localsettings.py
 
@@ -15,3 +16,6 @@ localsettings.py
 staticfiles
 mediafiles
 media
+tmp
+temp
+.vscode
