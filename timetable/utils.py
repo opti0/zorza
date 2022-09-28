@@ -1,6 +1,7 @@
 import locale
 from datetime import datetime, date, timedelta
 from collections import OrderedDict
+from re import S
 
 from django.conf import settings
 from django.db.models import Min, Max
@@ -226,8 +227,12 @@ def get_teacher_by_name(full_name, surname_first=False):
 
 def get_timetable_settings(request):
     cookies = {}
-    for setting in request.COOKIES.get('settings').split(';'):
-        cookies[setting] = True
+    _cookies = request.COOKIES.get('settings')
+    if _cookies is None:
+        return cookies
+    else:
+        for setting in _cookies.split(';'):
+            cookies[setting] = True
     return cookies
 
 def sterilize_timetable_settings(data):
