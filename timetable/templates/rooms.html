@@ -28,39 +28,51 @@ Showing lessons by room on {{ date }}, period number {{ period }}.
 					{{ room.short_name }}
 				</a>
 			</td>
-			{% if lesson %}
+			{% if lesson.substitute and settings.show_substitutions %}
 			<td>
-				{% if lesson.substitute %}
 				<a href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
 					<del>{{ lesson.teacher.initials }}</del>
 				</a>
 				<a href="{% url "teacher_timetable" lesson.substitute.id %}" title="{{ lesson.substitute.full_name }}">
 					{{ lesson.substitute.initials }}
 				</a>
-				{% else %}
-				<a href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
-					{{ lesson.teacher.initials }}
-				</a>
-				{% endif %}
 			</td>
 			<td>
-				{% if lesson.message %}
-				<span title="{{ lesson.message }}">
-					{{ lesson.message }}
-				</span>
-				{% else %}
 				<span title="{{ lesson.subject.name }}">
 					{{ lesson.subject.short_name }}
 				</span>
-				{% endif %}
 			</td>
-
 			<td>
-				{% if not lesson.message %}
 				<a href="{% url "groups_timetable" lesson.group_id|slugify %}">
 					{{ lesson.group }}
 				</a>
-				{% endif %}
+			</td>
+			{% elif lesson and lesson.reserved and settings.show_reservations %}
+			<td>
+				<a href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
+					{{ lesson.teacher.initials }}
+				</a>
+			</td>
+			<td>
+				{% trans "RESERVED" %}
+			</td>
+			<td>
+			</td>
+			{% elif lesson %}
+			<td>
+				<a href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
+					{{ lesson.teacher.initials }}
+				</a>
+			</td>
+			<td>
+				<span title="{{ lesson.subject.name }}">
+					{{ lesson.subject.short_name }}
+				</span>
+			</td>
+			<td>
+				<a href="{% url "groups_timetable" lesson.group_id|slugify %}">
+					{{ lesson.group }}
+				</a>
 			</td>
 			{% else %}
 			<td></td>

@@ -21,7 +21,7 @@ from django.conf import settings
 
 from .models import *
 from .utils import (get_timetable_context, get_schedules_table, get_days_periods,
-    get_events, get_display_context, get_teacher_by_name)
+    get_events, get_display_context, get_teacher_by_name, get_timetable_settings, sterilize_timetable_settings)
 from .forms import *
 
 
@@ -53,7 +53,7 @@ def show_class_timetable(request, class_id):
     klass = get_object_or_404(Class, pk=class_id)
     groups = Group.objects.filter(classes=klass)
     lessons = Lesson.objects.filter(group__in=groups)
-    context = get_timetable_context(lessons)
+    context = get_timetable_context(request, lessons)
     context['class'] = klass
     context['groups'] = groups
     return render(request, 'class_timetable.html', context)
@@ -67,14 +67,14 @@ def show_groups_timetable(request, group_ids):
     if len(groups) != len(group_ids):
         raise Http404
     lessons = Lesson.objects.filter(group__in=group_ids)
-    context = get_timetable_context(lessons)
+    context = get_timetable_context(request, lessons)
     context['groups'] = groups
     return render(request, 'group_timetable.html', context)
 
 def show_room_timetable(request, room_id):
     room = get_object_or_404(Room, pk=room_id)
     lessons = Lesson.objects.filter(room=room).prefetch_related('group__classes')
-    context = get_timetable_context(lessons)
+    context = get_timetable_context(request, lessons)
     context['room'] = room
     reservations = Reservation.objects.filter(room=room)
     for reservation in reservations:
@@ -86,14 +86,22 @@ def show_room_timetable(request, room_id):
             weekday=reservation.weekday,
             room=reservation.room
             ))
+        context['table'][reservation.period_number][1][reservation.weekday][0].reserved = True
     return render(request, 'room_timetable.html', context)
 
 def show_teacher_timetable(request, teacher_id):
     teacher = get_object_or_404(Teacher, pk=teacher_id)
     lessons = Lesson.objects.filter(teacher=teacher).prefetch_related('group__classes')
-    context = get_timetable_context(lessons)
+    context = get_timetable_context(request, lessons)
     context['teacher'] = teacher
     context['timetable_teacher'] = teacher
+    for sub in context['substitutions']:
+        if sub.substitute == teacher:
+            context['table'][sub.lesson.period][1][sub.date.weekday()] = [sub.lesson]
+            context['table'][sub.lesson.period][1][sub.date.weekday()][0].substitute = teacher
+        if sub.lesson.teacher == teacher:
+            context['table'][sub.lesson.period][1][sub.date.weekday()][0].cancelled = True
+            
     return render(request, 'teacher_timetable.html', context)
 
 def personalize(request, class_id):
@@ -194,14 +202,21 @@ def show_rooms(request, date, period):
 
     reservations = Reservation.objects.filter(date=date, period_number=period)
     for res in reservations:
-        rooms[res.room] = copy.copy(lessons[0])
-        rooms[res.room].substitute = res.teacher
-        rooms[res.room].message = _("RESERVED")
+        rooms[res.room] = Lesson(
+            teacher=res.teacher,
+            group = None,
+            subject=None,
+            period=res.period_number,
+            weekday=res.weekday,
+            room=res.room
+            )
+        rooms[res.room].reserved = True
     
     context = {
         'date': date,
         'period': period,
         'rooms': rooms,
+        'settings': get_timetable_settings(request),
     }
     return render(request, 'rooms.html', context)
 
@@ -341,3 +356,16 @@ class AddReservationView(PermissionRequiredMixin, FormView):
         reservation = Reservation(date=date, period_number=period, teacher=teacher, room=room)
         reservation.save()
         return redirect('add_reservation')
+
+class Customize(FormView):
+    template_name = 'customize.html'
+    form_class = CustomizeForm
+    
+    def form_valid(self, form):
+        data = form.cleaned_data
+        cookies = sterilize_timetable_settings(form.cleaned_data)
+        response = HttpResponseRedirect('customize')
+        today = date.today()
+        expires = datetime.datetime(today.year + 1, today.month, today.day, 0, 0, 0)
+        response.set_cookie(expires=expires, key='settings', value=cookies)
+        return response

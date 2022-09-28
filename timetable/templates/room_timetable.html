@@ -10,7 +10,14 @@
 {% endblock %}
 
 {% block lesson %}
-{% if lesson.group.link_to_class %}
+{% if lesson.reserved and settings.show_reservations %}
+<div class="lesson-tworows">
+	<a href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}" >
+		{{ lesson.teacher.initials}}
+	</a>
+	{% trans "RESERVED" %}
+</div>
+{% elif lesson.group.link_to_class %}
 <div class="lesson-onerow">
 	{% with class=lesson.group.classes.all.0 %}
 	<a class="teacher" href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">

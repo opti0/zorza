@@ -1,0 +1,19 @@
+﻿{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Customization" %} - Zorza
+{% endblock %}
+
+{% block content %}
+<form class="form-small customize-timetable no-print" method="post">
+	<h2>{% trans "Personalizing timetable" %}</h2>
+	{% csrf_token %}
+	{{ form.as_p }}
+	<p class="text-center">
+		<button type="submit" class="button-primary">
+			{% trans "Submit" %}
+		</button>
+	</p>
+</form>
+{% endblock %}
