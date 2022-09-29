@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-25 20:33+0200\n"
+"POT-Creation-Date: 2022-09-28 22:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgid "Content"
 msgstr "Treść"
 
 #: contact/templates/contact/message_form.html:5
-#: contact/templates/contact/message_form.html:10 templates/base.html:39
+#: contact/templates/contact/message_form.html:10 templates/base.html:40
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -56,12 +56,11 @@ msgid "Title"
 msgstr "Tytuł"
 
 #: documents/forms.py:21
-#: env/lib/python3.10/site-packages/django/db/models/fields/files.py:221
 msgid "File"
 msgstr "Plik"
 
 #: documents/templates/breadcrumbs.html:2
-#: documents/templates/show_category.html:5 templates/base.html:25
+#: documents/templates/show_category.html:5 templates/base.html:26
 msgid "Documents"
 msgstr "Dokumenty"
 
@@ -87,7 +86,7 @@ msgstr "Powrót"
 #: documents/templates/show_mine.html:31
 #: timetable/templates/substitutions.html:38
 msgid "Delete"
-msgstr ""
+msgstr "Usuń"
 
 #: documents/templates/edit_document.html:6
 #: documents/templates/edit_document.html:16
@@ -160,15 +159,15 @@ msgstr "Dodaj dokument"
 
 #: templates/404.html:12
 msgid "Page not found"
-msgstr ""
+msgstr "Nie znaleziono strony"
 
-#: templates/base.html:16 templates/registration/logged_out.html:13
+#: templates/base.html:17 templates/registration/logged_out.html:13
 #: timetable/templates/display.html:54
 #: timetable/templates/show_substitutions_to_print.html:18
 msgid "Visit the main page"
 msgstr "Odwiedź stronę główną"
 
-#: templates/base.html:22 timetable/templates/class_timetable.html:5
+#: templates/base.html:23 timetable/templates/class_timetable.html:5
 #: timetable/templates/group_timetable.html:5
 #: timetable/templates/room_timetable.html:5
 #: timetable/templates/teacher_timetable.html:5
@@ -176,11 +175,11 @@ msgstr "Odwiedź stronę główną"
 msgid "Timetable"
 msgstr "Plan lekcji"
 
-#: templates/base.html:35
+#: templates/base.html:36
 msgid "About"
 msgstr "O projekcie"
 
-#: templates/base.html:37 timetable/templates/management.html:5
+#: templates/base.html:38 timetable/templates/management.html:5
 #: timetable/templates/management.html:11
 msgid "Management"
 msgstr "Zarządzanie"
@@ -188,16 +187,20 @@ msgstr "Zarządzanie"
 #: templates/registration/logged_out.html:5
 #: templates/registration/logged_out.html:10
 msgid "Logged out"
-msgstr ""
+msgstr "Wylogowanie"
+
+#: templates/registration/logged_out.html:15
+msgid "or"
+msgstr "lub"
 
 #: templates/registration/logged_out.html:17
 msgid "Log in again"
-msgstr ""
+msgstr "Zaloguj się ponownie"
 
 #: templates/registration/login.html:5 templates/registration/login.html:10
 #: templates/registration/login.html:33
 msgid "Log in"
-msgstr ""
+msgstr "Zaloguj się"
 
 #: templates/registration/login.html:13
 msgid "Your username and password didn't match. Please try again."
@@ -237,7 +240,7 @@ msgstr "{} nie ma planowych lekcji podanego dnia."
 
 #: timetable/forms.py:44
 msgid "-----"
-msgstr ""
+msgstr "-----"
 
 #: timetable/forms.py:44 timetable/forms.py:130 timetable/models.py:122
 #: timetable/models.py:167
@@ -257,9 +260,19 @@ msgstr "Plik CSV z zastępstwami"
 msgid "Room"
 msgstr "Sala"
 
+#: timetable/forms.py:174
+#| msgid "Show lessons in rooms"
+msgid "Show reservations in room timetable"
+msgstr "Pokaż rezerwacje w planie lekcji sal"
+
+#: timetable/forms.py:175
+#| msgid "Import substitutions from a CSV file"
+msgid "Show substitutions in group timetable"
+msgstr "Pokaż zastępstwa w planie klasy/grupy"
+
 #: timetable/models.py:28
 msgid "link_to_class needs exactly one class"
-msgstr ""
+msgstr "link_to_class potrzebuje dokładnie jednej klasy"
 
 #: timetable/models.py:139 timetable/templates/add_substitutions.html:29
 msgid "Lesson"
@@ -299,6 +312,7 @@ msgstr "Dzisiejsza data to %(today)s."
 
 #: timetable/templates/add_dayplan.html:21
 #: timetable/templates/add_reservation.html:21
+#: timetable/templates/customize.html:15
 msgid "Submit"
 msgstr "Zatwierdź"
 
@@ -334,7 +348,7 @@ msgstr ""
 #: timetable/templates/reservations.html:12
 #: timetable/templates/schedules.html:26
 #: timetable/templates/substitutions.html:19
-#: timetable/templates/timetable_base.html:31
+#: timetable/templates/timetable_base.html:36
 msgctxt "timetable header"
 msgid "No."
 msgstr "Nr"
@@ -355,7 +369,7 @@ msgstr "%(name)s nie ma planowych lekcji tego dnia (%(weekday)s)."
 msgid "Class"
 msgstr "Klasa"
 
-#: timetable/templates/class_timetable.html:25
+#: timetable/templates/class_timetable.html:56
 msgid "Select groups to show"
 msgstr "Wybierz grupy do wyświetlania"
 
@@ -384,6 +398,15 @@ msgstr "Dodane/zaktualizowane"
 msgid "Errors"
 msgstr "Błędy"
 
+#: timetable/templates/customize.html:5
+#| msgid "Substitutions"
+msgid "Customization"
+msgstr "Dostosowywanie"
+
+#: timetable/templates/customize.html:10
+msgid "Personalizing timetable"
+msgstr "Personalizowanie planu"
+
 #: timetable/templates/date_select.html:5
 #: timetable/templates/import_substitutions.html:6
 #: timetable/templates/management.html:19
@@ -394,10 +417,9 @@ msgid "Substitutions"
 msgstr "Zastępstwa"
 
 #: timetable/templates/date_select.html:10
-#, fuzzy
 #| msgid "Select date and period"
 msgid "Select date"
-msgstr "Wybierz datę i numer lekcji"
+msgstr "Wybierz datę"
 
 #: timetable/templates/date_select.html:21
 #: timetable/templates/teacher_and_date_select.html:21
@@ -461,11 +483,11 @@ msgstr "Zalogowano jako %(user)s."
 
 #: timetable/templates/management.html:14
 msgid "Log out"
-msgstr ""
+msgstr "Wyloguj się"
 
 #: timetable/templates/management.html:15
 msgid "Change password"
-msgstr ""
+msgstr "Zmień hasło"
 
 #: timetable/templates/management.html:22
 msgid "Print substitutions"
@@ -477,7 +499,7 @@ msgstr "Importuj zastępstwa z CSV"
 
 #: timetable/templates/management.html:32
 msgid "Administration"
-msgstr ""
+msgstr "Administracja"
 
 #: timetable/templates/management.html:51
 #, python-format
@@ -507,7 +529,7 @@ msgstr "Drukuj"
 
 #: timetable/templates/reservations.html:13
 #: timetable/templates/substitutions.html:20
-#: timetable/templates/timetable_base.html:32
+#: timetable/templates/timetable_base.html:37
 msgctxt "timetable header"
 msgid "Period"
 msgstr "Godz."
@@ -516,7 +538,8 @@ msgstr "Godz."
 msgid "Classroom"
 msgstr "Sala"
 
-#: timetable/templates/room_timetable.html:35 timetable/views.py:197
+#: timetable/templates/room_timetable.html:18
+#: timetable/templates/room_timetable.html:42 timetable/templates/rooms.html:57
 msgid "RESERVED"
 msgstr "ZAREZERWOWANE"
 
@@ -563,7 +586,7 @@ msgstr "Nie ma zaplanowanych zastępstw wybranego dnia."
 
 #: timetable/templates/substitutions.html:24
 msgid "Delete?"
-msgstr ""
+msgstr "Usunąć?"
 
 #: timetable/templates/teacher_and_date_select.html:10
 msgid "Adding substitutions — step 1"
@@ -588,6 +611,11 @@ msgid "Lessons have already finished today."
 msgstr "Lekcje się już skończyły."
 
 #: timetable/templates/timetable_base.html:17
+#| msgid "Go to timetable"
+msgid "Customize your timetable"
+msgstr "Dostosuj swój plan"
+
+#: timetable/templates/timetable_base.html:22
 msgid "Set as default timetable"
 msgstr "Ustaw jako domyślny plan lekcji"
 
@@ -613,39 +641,39 @@ msgstr "Wybierz salę"
 
 #: timetable/templates/timetable_select.html:31
 msgid "Go"
-msgstr ""
-
-#: timetable/views.py:104
-msgid "Select at least one group"
-msgstr "Wybierz co najmniej jedną grupę"
+msgstr "Dalej"
 
 #: timetable/tests.py:12 zorza/settings.py:141
 msgid "Monday"
-msgstr ""
+msgstr "Poniedziałek"
 
 #: timetable/tests.py:13 zorza/settings.py:142
 msgid "Tuesday"
-msgstr ""
+msgstr "Wtorek"
 
 #: timetable/tests.py:14 zorza/settings.py:143
 msgid "Wednesday"
-msgstr ""
+msgstr "Środa"
 
 #: timetable/tests.py:15 zorza/settings.py:144
 msgid "Thursday"
-msgstr ""
+msgstr "Czwartek"
 
 #: timetable/tests.py:16 zorza/settings.py:145
 msgid "Friday"
-msgstr ""
+msgstr "Piątek"
 
 #: timetable/tests.py:17
 msgid "Saturday"
-msgstr ""
+msgstr "Sobota"
 
 #: timetable/tests.py:18
 msgid "Sunday"
-msgstr ""
+msgstr "Niedziela"
+
+#: timetable/views.py:113
+msgid "Select at least one group"
+msgstr "Wybierz co najmniej jedną grupę"
 
 #~ msgid "Choice"
 #~ msgstr "Wybór"
@@ -655,7 +683,7 @@ msgstr ""
 
 #~ msgctxt "dayplans"
 #~ msgid "On "
-#~ msgstr " "
+#~ msgstr ""
 
 #~ msgid "Today the %(schedule)s is in function."
 #~ msgstr "Dzisiaj obowiązują %(schedule)s."

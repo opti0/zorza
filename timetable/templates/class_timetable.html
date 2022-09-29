@@ -11,11 +11,42 @@
 
 {% block lesson %}
 <div class="lesson-onerow">
-	<a class="teacher" href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">{{ lesson.teacher.initials }}</a>
+	{% if lesson.cancelled %}
+	<del>
+		<a href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
+			{{ lesson.teacher.initials }}
+		</a>
+		<span class="subject" title="{{ lesson.subject.name }}">
+			{{ lesson.subject.short_name }}
+		</span>
+		<a class="room" href="{% url "room_timetable" lesson.room_id %}" title="{{ lesson.room.name }}">
+			{{ lesson.room.short_name }}
+		</a>
+	</del>
+	{% elif lesson.substitute and settings.show_substitutions %}
+	<a href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
+		<del>{{ lesson.teacher.initials }}</del>
+	</a>
+	<a href="{% url "teacher_timetable" lesson.substitute.id %}" title="{{ lesson.substitute.full_name }}">
+		{{ lesson.substitute.initials }}
+	</a>
 	<span class="subject" title="{{ lesson.subject.name }}">
 		{{ lesson.subject.short_name }}
 	</span>
-	<a class="room" href="{% url "room_timetable" lesson.room_id %}" title="{{ lesson.room.name }}">{{ lesson.room.short_name }}</a>
+	<a class="room" href="{% url "room_timetable" lesson.room_id %}" title="{{ lesson.room.name }}">
+		{{ lesson.room.short_name }}
+	</a>
+	{% else %}
+	<a href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
+		{{ lesson.teacher.initials }}
+	</a>
+	<span class="subject" title="{{ lesson.subject.name }}">
+		{{ lesson.subject.short_name }}
+	</span>
+	<a class="room" href="{% url "room_timetable" lesson.room_id %}" title="{{ lesson.room.name }}">
+		{{ lesson.room.short_name }}
+	</a>
+	{% endif %}
 </div>
 {% endblock %}
 

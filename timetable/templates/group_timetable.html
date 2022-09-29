@@ -38,9 +38,18 @@
 
 {% block lesson %}
 <div class="lesson-onerow">
+	{% if lesson.substitute and settings.show_substitutions %}
+	<a class="teacher" href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
+		<del>{{ lesson.teacher.initials }}</del>
+	</a>
+	<a href="{% url "teacher_timetable" lesson.substitute.id %}" title="{{ lesson.substitute.full_name }}">
+		{{ lesson.substitute.initials }}
+	</a>
+	{% else %}
 	<a class="teacher" href="{% url "teacher_timetable" lesson.teacher_id %}" title="{{ lesson.teacher.full_name }}">
 		{{ lesson.teacher.initials }}
 	</a>
+	{% endif %}
 	<span class="subject" title="{{ lesson.subject.name }}">
 		{{ lesson.subject.short_name }}
 	</span>
@@ -48,5 +57,4 @@
 		{{ lesson.room.short_name }}
 	</a>
 </div>
-{% endblock %}
-
+{% endblock lesson %}

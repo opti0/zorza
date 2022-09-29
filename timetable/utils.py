@@ -1,6 +1,7 @@
 import locale
 from datetime import datetime, date, timedelta
 from collections import OrderedDict
+from re import S
 
 from django.conf import settings
 from django.db.models import Min, Max
@@ -34,7 +35,7 @@ def get_display_context():
     context.update(get_events())
     return context
 
-def get_timetable_context(lessons):
+def get_timetable_context(request, lessons):
     default_periods = Period.objects.filter(schedule__is_default=True)
     if not default_periods:
         raise Http404('No default timetable or periods')
@@ -61,12 +62,20 @@ def get_timetable_context(lessons):
         locale.strxfrm(t['last_name']+t['first_name']))
         # Sort considering system locale
 
+    events = get_events()
+    for sub in events['substitutions']:
+        for lesson in table[sub.lesson.period][1][sub.date.weekday()]:
+            if lesson.teacher == sub.lesson.teacher:
+                lesson.substitute = sub.substitute
+                if sub.substitute == None:
+                    lesson.cancelled = True
     context = {
         'table': table,
         'class_list': Class.objects.all().values(),
         'teacher_list': teachers,
         'room_list': Room.objects.all().values(),
         'timetable_version': settings.TIMETABLE_VERSION,
+        'settings': get_timetable_settings(request)
     }
     context.update(get_display_context())
 
@@ -215,3 +224,20 @@ def get_teacher_by_name(full_name, surname_first=False):
     if qs.exists():
         return qs.first()
     return None
+
+def get_timetable_settings(request):
+    cookies = {}
+    _cookies = request.COOKIES.get('settings')
+    if _cookies is None:
+        return cookies
+    else:
+        for setting in _cookies.split(';'):
+            cookies[setting] = True
+    return cookies
+
+def sterilize_timetable_settings(data):
+    cookies = ''
+    for setting in data:
+        if data[setting]:
+            cookies += ';' + setting
+    return cookies
