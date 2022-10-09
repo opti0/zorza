@@ -197,6 +197,11 @@ a:hover {
   text-align: right;
 }
 
+#button-bar {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
 footer {
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -219,7 +224,7 @@ select {
   text-align: center;
 }
 
-#set-def-button {
+#set-def-button, #set-default-button {
   display: inline;
   font-size: 1rem;
   background: none !important;
@@ -228,7 +233,7 @@ select {
   padding: 0 !important;
 }
 
-#set-def-button:hover {
+#set-def-button:hover, #set-default-button:hover {
   text-decoration: underline;
   cursor: pointer;
 }
