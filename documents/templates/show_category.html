@@ -36,6 +36,7 @@
 	{% if item.file %}
 	<span class="file-description">
 		{{ item.file.data.size|filesizeformat }}
+		{{ item.file.filetype }}
 	</span>
 	{% endif %}
 </div>

@@ -22,6 +22,7 @@
 	{% if item.file %}
 	<span class="file-description">
 		{{ item.file.data.size|filesizeformat }}
+		{{ item.file.filetype }}
 	</span>
 	{% endif %}
 	<a href="{% if item.file %}{% url "edit_file" item.id %}{% else %}{% url "edit_document" item.id %}{% endif %}">

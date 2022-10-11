@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.conf import settings
 
@@ -46,6 +47,9 @@ class Item(models.Model):
 
 class File(Item):
     data = models.FileField(upload_to='documents/')
+    
+    def filetype(self):
+        return os.path.splitext(str(self.data))[1].upper()[1:]
 
 class Document(Item):
     content = models.TextField()
