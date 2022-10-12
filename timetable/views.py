@@ -341,3 +341,30 @@ class AddReservationView(PermissionRequiredMixin, FormView):
         reservation = Reservation(date=date, period_number=period, teacher=teacher, room=room)
         reservation.save()
         return redirect('add_reservation')
+
+@permission_required('timetable.check_database', raise_exception=True)
+def check_database(request):
+    errors = []
+    teachers = Teacher.objects.all()
+    for teacher in teachers:
+        lessons = Lesson.objects.filter(teacher=teacher)
+        timetable_array = [[0 for col in range(get_max_period())] for row in range(len(settings.TIMETABLE_WEEKDAYS))]
+        for lesson in lessons:
+            timetable_array[lesson.weekday][lesson.period] += 1
+        for lesson in lessons:
+            if timetable_array[lesson.weekday][lesson.period] > 1:
+                errors.append(_("Teacher %s: has more than one lesson at a time (%s)") % (teacher, lesson))
+                
+    rooms = Room.objects.all()
+    for room in rooms:
+        lessons = Lesson.objects.filter(room=room)
+        timetable_array = [[0 for col in range(get_max_period())] for row in range(len(settings.TIMETABLE_WEEKDAYS))]
+        for lesson in lessons:
+            timetable_array[lesson.weekday][lesson.period] += 1
+        for lesson in lessons:
+            if timetable_array[lesson.weekday][lesson.period] > 1:
+                errors.append(_("Room %s: more than one lesson at a time (%s)" % (room.name, lesson)))    
+    context = {
+        'errors': errors
+    }
+    return render(request, 'display_database_errors.html', context)

@@ -1,0 +1,32 @@
+﻿{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Database checks" %} - Zorza
+{% endblock %}
+
+{% block content %}
+
+<h2>{% trans "Database checks" %}</h2>
+{% if errors %}
+<p>{% trans "Bugs found:" %}</p>
+{% for error in errors %}
+    <li>
+        {{ error }}
+    </li>
+{% endfor %}
+{% else %}
+<div class="container text-center">
+	<h3>
+        {% trans "There are no errors!" %}
+        <br>
+    </h3>
+    <p>
+        <a href="{% url "home" %}">
+            {% trans "Visit the main page." %}
+        </a>
+    </p>
+</div>
+{% endif %}
+
+{% endblock %}
