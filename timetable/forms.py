@@ -1,3 +1,4 @@
+from ast import For
 import datetime
 
 from django.forms  import *
@@ -17,6 +18,10 @@ class Html5DateInput(DateInput):
 
 class Html5DateField(DateField):
     widget = Html5DateInput(format='%Y-%m-%d')
+
+class SelectDateAndTeachersForm(Form):
+    date = Html5DateField(label=_('Date'), initial=get_next_schoolday)
+    teacher = ModelMultipleChoiceField(label=_('Teacher'), queryset=Teacher.objects.all())
 
 class SelectTeacherAndDateForm(Form):
     teacher = ModelChoiceField(label=_('Teacher'), queryset=Teacher.objects.all())
