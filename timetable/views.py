@@ -312,7 +312,6 @@ class SubstitutionsImportView(FormView):
 
 class PrintSubstitutionsView(PermissionRequiredMixin, FormView):
     template_name = 'print_substitutions.html'
-    #form_class = SelectDateForm
     form_class = SelectDateAndTeachersForm
     permission_required = 'timetable.print_substitution'
 
