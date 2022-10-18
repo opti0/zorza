@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Substitutions" %} - Zorza
+{% endblock %}
+
+{% block content %}
+<form class="form-small print-substitutions no-print" method="post">
+	<h2>{% trans "Printing substitutions" %}</h2>
+	{% if error %}
+	<p>{{ error }}</p>
+	{% endif %}
+	{% if not teachers %}
+	<p>{% trans "There are no teachers who have lesson on a given day" %}</p>
+	{% endif %}
+	<p>
+		{% now "SHORT_DATE_FORMAT" as today %}
+		{% blocktrans trimmed %}
+		Today's date is {{ today }}.
+		{% endblocktrans %}
+	</p>
+	{% csrf_token %}
+	
+	{% for teacher in teachers %}
+	<label class="teacher-checkbox" for="teacher-checkbox-{{ teacher.id }}">
+		
+		<input type="checkbox" name="teacher-checkbox" id="teacher-checkbox-{{ teacher.id }}" value="{{ teacher.id }}">
+		<span>
+			{{ teacher.full_name }}
+		</span>
+	</label>
+	{% endfor %}
+	<p class="text-center">
+		<button type="submit" class="button-primary">
+			{% trans "Print" %}
+		</button>
+	</p>
+</form>
+
+
+{% endblock %}
