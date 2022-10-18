@@ -215,3 +215,11 @@ def get_teacher_by_name(full_name, surname_first=False):
     if qs.exists():
         return qs.first()
     return None
+
+def get_teachers_by_lesson_date(date):
+    lessons = Lesson.objects.filter(weekday=date.weekday())
+    teachers = []
+    for lesson in lessons:
+        teachers.append(lesson.teacher)
+    teachers = list(dict.fromkeys(teachers))
+    return teachers
