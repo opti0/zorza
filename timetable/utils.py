@@ -1,4 +1,5 @@
 import locale
+import operator
 from datetime import datetime, date, timedelta
 from collections import OrderedDict
 
@@ -222,4 +223,5 @@ def get_teachers_by_lesson_date(date):
     for lesson in lessons:
         teachers.append(lesson.teacher)
     teachers = list(dict.fromkeys(teachers))
+    teachers.sort(key=operator.attrgetter('last_name'))
     return teachers
