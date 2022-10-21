@@ -177,7 +177,7 @@ def get_schedules_table():
     context['active'] = active
     context['schedules'] = schedules
     context['table'] = table
-    return context;
+    return context
 
 def get_utc_offset():
     """Returns difference from UTC in minutes.
@@ -217,11 +217,11 @@ def get_teacher_by_name(full_name, surname_first=False):
         return qs.first()
     return None
 
-def get_teachers_by_lesson_date(date):
-    lessons = Lesson.objects.filter(weekday=date.weekday())
+def get_teachers_by_substitutions_date(date):
+    substitutions = Substitution.objects.filter(date=date)
     teachers = []
-    for lesson in lessons:
-        teachers.append(lesson.teacher)
+    for substitution in substitutions:
+        teachers.append(substitution.lesson.teacher)
     teachers = list(dict.fromkeys(teachers))
     teachers.sort(key=operator.attrgetter('last_name'))
     return teachers

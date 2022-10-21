@@ -19,7 +19,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.conf import settings
 
 from .models import *
-from .utils import (get_teachers_by_lesson_date, get_timetable_context, get_schedules_table, get_days_periods,
+from .utils import (get_teachers_by_substitutions_date, get_timetable_context, get_schedules_table, get_days_periods,
     get_events, get_display_context, get_teacher_by_name)
 from .forms import *
 
@@ -370,7 +370,9 @@ def print_substitution2(request, date):
             context['error'] = _('Select at least one teacher')
         else:
             return redirect('show_substitutions_as_html', date, ','.join(teachers))
-    teachers = get_teachers_by_lesson_date(date)
+    teachers = get_teachers_by_substitutions_date(date)
     context['teachers'] = teachers
     context['date'] = date
+    if len(teachers) < 1: 
+        return render(request, 'show_substitutions_to_print.html', context)
     return render(request, 'print_substitutions2.html', context)

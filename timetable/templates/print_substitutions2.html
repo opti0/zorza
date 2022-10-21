@@ -11,9 +11,6 @@
 	{% if error %}
 	<p>{{ error }}</p>
 	{% endif %}
-	{% if not teachers %}
-	<p>{% trans "There are no teachers who have lesson on a given day" %}</p>
-	{% endif %}
 	<p>
 		{% now "SHORT_DATE_FORMAT" as today %}
 		{% blocktrans trimmed %}
@@ -25,7 +22,7 @@
 	{% for teacher in teachers %}
 	<label class="teacher-checkbox" for="teacher-checkbox-{{ teacher.id }}">
 		<span>
-			{{ teacher.full_name }}
+			{{ teacher.last_name }} {{ teacher.first_name }}
 		</span>
 		<input type="checkbox" name="teacher-checkbox" id="teacher-checkbox-{{ teacher.id }}" value="{{ teacher.id }}">
 	</label>
