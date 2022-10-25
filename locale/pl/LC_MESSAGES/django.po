@@ -594,7 +594,7 @@ msgstr "Dodawanie zastępstw — krok 1"
 
 #: timetable/templates/timer.html:3
 msgid "<time></time> until the first period today."
-msgstr "Do pierwszej lekcji pozostało <time></time>."
+msgstr "Do rozpoczęcia lekcji pozostało <time></time>."
 
 #: timetable/templates/timer.html:6
 msgid ""
