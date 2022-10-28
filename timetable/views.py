@@ -321,10 +321,18 @@ def show_substitutions(request, date, teacher_ids):
     if len(teacher_ids) != len(teachers):
         raise Http404
     substitutions = Substitution.objects.filter(lesson__teacher=teachers[0], date=date)
+    are_shortened = DayPlan.objects.filter(date=date)[0].schedule_id == 44
+    periods = []
     for teacher in teachers:
         substitutions = substitutions | Substitution.objects.filter(lesson__teacher=teacher, date=date)
-    context['substitutions'] = substitutions
-    context['date'] = date
+    for substitution in substitutions:
+        period = Period.objects.filter(number=substitution.lesson.period)
+        periods.append(period[are_shortened])
+    context = {
+        'substitutions': substitutions,
+        'periods': periods,
+        'date': date,
+    }
     return render(request, 'show_substitutions_to_print.html', context)
 
 class AddReservationView(PermissionRequiredMixin, FormView):

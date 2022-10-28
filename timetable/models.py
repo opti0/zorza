@@ -133,8 +133,6 @@ class Lesson(models.Model):
     weekday = models.IntegerField(choices=settings.TIMETABLE_WEEKDAYS)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
-    def period_str(self):
-        return '%s' % Period.objects.filter(number=self.period, schedule__is_default=True)[0]
     def __str__(self):
         return '%s %s %s, %s, %s %d %s' % \
             (self.teacher.initials, self.subject.short_name,

@@ -1,5 +1,4 @@
 import locale
-import operator
 from datetime import datetime, date, timedelta
 from collections import OrderedDict
 
@@ -223,5 +222,6 @@ def get_teachers_by_substitutions_date(date):
     for substitution in substitutions:
         teachers.append(substitution.lesson.teacher)
     teachers = list(dict.fromkeys(teachers))
-    teachers.sort(key=operator.attrgetter('last_name'))
+    teachers = sorted(teachers, key=lambda t:
+        locale.strxfrm(t.last_name+t.first_name))
     return teachers
