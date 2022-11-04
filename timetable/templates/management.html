@@ -45,6 +45,11 @@
 		<a href="{% url "add_reservation" %}">{% trans "Reservations" %}</a>
 	</p>
 	{% endif %}
+	{% if perms.timetable.check_database %}
+	<p>
+		<a href="{% url "check_database" %}">{% trans "Database checks" %}</a>
+	</p>
+	{% endif %}
 
 	{% if cache_time != 0 %}
 	<p>
