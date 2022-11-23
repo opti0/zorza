@@ -21,9 +21,9 @@
 	
 	{% for teacher in teachers %}
 	<label class="teacher-checkbox" for="teacher-checkbox-{{ teacher.id }}">
-		<span>
+		<div>
 			{{ teacher.last_name }} {{ teacher.first_name }}
-		</span>
+		</div>
 		<input type="checkbox" name="teacher-checkbox" id="teacher-checkbox-{{ teacher.id }}" value="{{ teacher.id }}">
 	</label>
 	{% endfor %}
