@@ -255,6 +255,12 @@ input[type="file"] {
 	background: transparent;
 }
 
+input.fix
+{
+  float: right;
+  width: 1em;
+}
+
 textarea {
 	resize: vertical;
 }
@@ -374,6 +380,7 @@ table.substitution {
 @media print {
 	* {
 		color: black !important;
+		page-break-inside: avoid;
 	}
 	header, footer, .no-print {
 		display: none !important;
