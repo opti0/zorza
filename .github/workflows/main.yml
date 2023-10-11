@@ -32,9 +32,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'requirements*.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements*.txt') }}
         restore-keys: |
-          ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'requirements*.txt') }}
+          ${{ runner.os }}-pip-${{ hashFiles('requirements*.txt') }}
     - name: Install pip dependencies
       run: |
         python -m pip install --upgrade pip wheel setuptools
