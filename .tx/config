@@ -1,0 +1,8 @@
+[main]
+host = https://app.transifex.com
+
+[o:zorza-lo3:p:zorza:r:zorza]
+file_filter = ./locale/<lang>/LC_MESSAGES/django.po
+source_file = ./locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
