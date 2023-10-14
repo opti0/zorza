@@ -3,7 +3,7 @@
 name: Transifex translations upload
 
 env:
-  TX_TOKEN: ${{ secrets.TRANSIFEX_API_TOKEN }}
+  TX_TOKEN: ${{ secrets.TRANSIFEX_TOKEN }}
 
 # This job should be only ran by hand.
 on:
