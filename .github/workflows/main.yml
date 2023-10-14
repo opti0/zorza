@@ -51,7 +51,6 @@ jobs:
       run: |
         cd zorza
         django-admin makemessages --all --no-obsolete --symlinks
-        django-admin makemessages --all --no-obsolete --symlinks -d djangojs
         git diff
         cd ..
         ../tx push --source
